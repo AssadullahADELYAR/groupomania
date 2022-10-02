@@ -2,13 +2,14 @@
 OpenClassrooms web development path final project (Project 7)
 ---
 ### prerequisite
-- Install Node.js
-- Install Vue.js
-- Install MySQL
+Node.js
+Vue.js
+MySQL
 
 **Back Folder**
 --- 
 This folder contains the server part of the application.
+
 The backend is created with Node.js, Express.js and MySQL as the database.
 
 To run the backend:
@@ -19,6 +20,7 @@ To run the backend:
 **Front Folder**
 ---
 This folder contains the UI part of the application.
+
 The frontend is created with Vue js and CSS.
 
 To run the backend:
