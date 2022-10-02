@@ -54,14 +54,11 @@ export default {
          this.$router.push({ path: `/editpost/${pId}` });
       },
       deletePost(pId, uId) {
-         // const attachedId = document.getElementById("postId").textContent;
-
          let user = localStorage.getItem("userInfo");
          let parsed = JSON.parse(user);
          let userId = parsed.userId;
          let token = parsed.token;
 
-         // const id = this.posts.post_id;
          if (uId === userId) {
             axios
                .delete(`http://localhost:3000/api/post/` + pId, {
@@ -99,8 +96,6 @@ export default {
          })
          .then((res) => {
             this.posts = res.data.reverse();
-            console.log("This is data=>", res.data);
-            console.log("This is date =>", res.data.createdAt);
          })
          .catch((error) => {
             console.log(error);
