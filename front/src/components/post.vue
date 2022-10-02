@@ -62,7 +62,7 @@ export default {
          let userId = userInfo.userId;
          let token = userInfo.token;
 
-         console.log("This is variable file", this.image_url);
+         // console.log("This is variable file", this.image_url);
 
          let theImage = new FormData();
 
@@ -79,7 +79,7 @@ export default {
                headers: { Authorization: "Bearer " + token },
             })
             .then((res) => {
-               console.log("This is respose: ", res);
+               console.log(res.data.message);
             })
             .catch((error) => {
                console.log(error);
@@ -88,15 +88,5 @@ export default {
          this.$router.push("/");
       },
    },
-   mounted() {
-      // if (this.postText.length < 1 && this.image_url.length < 1) {
-      //    document.querySelector(".button").disabled = true;
-      //    console.log(this.postText, this.image_url);
-      //    console.log(this.postText.length, this.image_url.length);
-      // }
-   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>

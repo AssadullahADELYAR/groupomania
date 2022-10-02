@@ -115,7 +115,6 @@ export default {
          firstName: "",
          lastName: "",
          email: "",
-         userId: "",
          profilePic: "",
          profileImage: "",
          oldPass: "",
@@ -134,7 +133,7 @@ export default {
    methods: {
       getFile(event) {
          this.profilePic = event.target.files[0];
-         console.log("this is profile pic file", this.profilePic);
+         // console.log("this is profile pic file", this.profilePic);
       },
       showPassInputs() {
          this.changePassword = !this.changePassword;
@@ -199,7 +198,7 @@ export default {
             )
             .then((res) => {
                if (res.status == 200) {
-                  console.log(res);
+                  // console.log(res);
                   localStorage.clear();
                   alert("User Deleted Successfully");
                   this.$router.push("/signup");
@@ -211,14 +210,11 @@ export default {
          this.$router.push({ path: `/editpost/${pId}` });
       },
       deletePost(pId, uId) {
-         // const attachedId = document.getElementById("postId").textContent;
-
          let user = localStorage.getItem("userInfo");
          let parsed = JSON.parse(user);
          let userId = parsed.userId;
          let token = parsed.token;
 
-         // const id = this.posts.post_id;
          if (uId === userId) {
             axios
                .delete(`http://localhost:3000/api/post/` + pId, {
@@ -228,7 +224,6 @@ export default {
                })
                .then((res) => {
                   if (res.status == 200) {
-                     // console.log("This is res", res);
                      alert("Post Deleted SuccessFully");
                      window.location.reload();
                   }

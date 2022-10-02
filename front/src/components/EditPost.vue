@@ -62,17 +62,12 @@ export default {
          let userId = userInfo.userId;
          let token = userInfo.token;
 
-         console.log("This is variable file", this.image_url);
-
          let theImage = new FormData();
 
          theImage.append("theImage", this.image_url);
          theImage.append("text", this.postText);
          theImage.append("userUserId", userId);
-         // theImage.append("comments", 0);
 
-         console.log("This is formData", theImage);
-         console.log(this.image_url);
          const id = this.$route.params.id;
 
          await axios
@@ -80,7 +75,7 @@ export default {
                headers: { Authorization: "Bearer " + token },
             })
             .then((res) => {
-               console.log("This is respose: ", res);
+               console.log(res.data.message);
             })
             .catch((error) => {
                console.log(error);
@@ -100,17 +95,13 @@ export default {
       } else {
          this.$route.params.id;
       }
-      console.log(this.$route.params.id);
       const postID = this.$route.params.id;
       await axios
          .get(`http://localhost:3000/api/post/${postID}`, {
             headers: { Authorization: "Bearer " + token },
          })
          .then((res) => {
-            console.log("This is res", res);
-            // this.posts = res.data.reverse();
-            // console.log(res.);
-            console.log("This is res.data =>", res.data);
+            console.log(res.data.message);
             this.postText = res.data.text;
             this.url = res.data.image_url;
          })
