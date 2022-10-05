@@ -1,6 +1,7 @@
 const db = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
 
 const Users = db.users;
 const Posts = db.posts;
@@ -17,6 +18,7 @@ exports.signup = (req, res, next) => {
             // console.log("Email exsit");
             return;
          } else {
+            //Hast the password
             bcrypt
                .hash(req.body.password, 10)
                .then((hash) => {
@@ -26,7 +28,7 @@ exports.signup = (req, res, next) => {
                      email: req.body.email,
                      password: hash,
                   };
-                  console.log("after bcrypt =>", user);
+                  // console.log("after bcrypt =>", user);
                   Users.create(user).then(() => {
                      res.status(201).json({
                         message: "User added",
@@ -59,6 +61,7 @@ exports.login = (req, res, next) => {
             });
             return;
          }
+         //Compare the hash password
          bcrypt
             .compare(req.body.password, user.password)
             .then((valid) => {
@@ -194,11 +197,6 @@ exports.changePassword = (req, res, next) => {
             message: "user not found",
          });
       }
-      // console.log("This user before bcrypt", user);
-      // let userObject = { ...req.body };
-      // console.log("This user req body", userObject);
-      // console.log("This old pass", userObject.oldPass);
-      // console.log("This new pass", userObject.newPass);
       bcrypt
          .compare(req.body.oldPass, user.password)
          .then((valid) => {

@@ -13,17 +13,19 @@ exports.createPost = (req, res, next) => {
    let newPost = {
       ...post,
    };
+   //If post has an image
    if (req.file) {
       newPost = {
          ...post,
          image_url: url + "/images/" + req.file.filename,
       };
    } else {
+      //Else post without image
       newPost = {
          ...post,
       };
    }
-   console.log("This is post", newPost);
+   // console.log("This is post", newPost);
    Posts.create(newPost)
       .then(() => {
          res.status(201).json({
@@ -42,7 +44,7 @@ exports.getOnePost = (req, res, next) => {
    const post_id = req.params.id;
    Posts.findByPk(post_id)
       .then((post) => {
-         console.log("This is post id => ", post.post_id);
+         // console.log("This is post id => ", post.post_id);
          res.status(200).json(post);
       })
       .catch((error) => {
@@ -56,7 +58,7 @@ exports.getOnePost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
    const url = req.protocol + "://" + req.get("host");
    let post = { ...req.body };
-
+   //If user change post image
    if (req.file) {
       post = {
          ...req.body,
@@ -67,8 +69,7 @@ exports.modifyPost = (req, res, next) => {
          ...req.body,
       };
    }
-   console.log("This is post=> ", post);
-   //If the user update the image
+   // console.log("This is post=> ", post);
 
    Posts.update(post, { where: { post_id: req.params.id } })
       .then(() => {
@@ -86,7 +87,7 @@ exports.modifyPost = (req, res, next) => {
 //----------- Delete Post --------------//
 exports.deletePost = (req, res, next) => {
    const id = req.params.id;
-   console.log("This is id => ", id);
+   // console.log("This is id => ", id);
    Posts.findByPk(id)
       .then((post) => {
          if (!post) {
@@ -95,6 +96,7 @@ exports.deletePost = (req, res, next) => {
             });
             return;
          } else {
+            //Remove post image
             const filename = post.image_url.split("/images/")[1];
             fs.unlink("images/" + filename, () => {
                Posts.destroy({ where: { post_id: id } })
@@ -115,7 +117,7 @@ exports.deletePost = (req, res, next) => {
 
 //---------------- All Post --------------//
 exports.getAllPost = (req, res, next) => {
-   console.log("This is all post route");
+   // console.log("This is all post route");
    Posts.findAll({ include: Users })
       .then((post) => {
          res.status(200).json(post);
@@ -130,7 +132,7 @@ exports.getAllPost = (req, res, next) => {
 
 //-------------User All Post --------------//
 exports.userAllPost = (req, res, next) => {
-   console.log("This is all post route");
+   // console.log("This is all post of user ");
 
    Posts.findAll({
       include: [
